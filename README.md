@@ -53,3 +53,36 @@ oci iam region list --output table
 | ZRH | eu-zurich-1       |
 +-----+-------------------+
 ```
+
+# Install ADBping
+## Install requirement
+Use Oracle Linux
+```sh
+sudo dnf install oracle-instantclient-release-el8 -y
+sudo dnf install oracle-instantclient-basic -y
+sudo dnf install oracle-instantclient-sqlplus -y
+sudo dnf install java-11-openjdk-devel -y
+sudo dnf install tzdata-java -y
+```
+
+## Install adbping
+```sh
+wget https://objectstorage.us-ashburn-1.oraclecloud.com/p/roSMTyBAHgIHlbEgWfHE-DFCVTAS5eFkqW9xuPCTM8zYEyFNVvIZFjCdk67gN5Fj/n/nrwchkxcfasu/b/adbping/o/adbping_Linux.X64_230127.zip
+mkdir adbping
+mv adbping_Linux.X64_230127.zip adbping
+cd adbping
+unzip adbping_Linux.X64_230127.zip
+```
+
+## Use adbping
+
+### With BaseDB
+Create adbping user
+```sh
+sqlplus sys/"password"@easy_connect as sysdba
+SQL>create user adbping identified by password;
+SQL>grant create session to adbping;
+```
+```sh
+ ./adbping -u adbping -p password -c java -w /tmp -s easy_connect
+```
